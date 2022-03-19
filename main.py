@@ -1,7 +1,10 @@
 import pygame, sys
 pygame.init()
-# Credit For Code: 
+# --------------------------------------------
+# Works Cited/Referenced
+# Code for displaying an image via Pygame: 
 # https://www.geeksforgeeks.org/python-display-images-with-pygame/#:~:text=There%20are%20four%20basic%20steps,drawn%20on%20it%2C%20using%20image. 
+#---------------------------------------------
 
 # Var with white RGB
 white = (255, 255, 255)
