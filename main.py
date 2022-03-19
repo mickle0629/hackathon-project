@@ -9,16 +9,16 @@ white = (255, 255, 255)
 # Dimensions of image to display
 display_surface = pygame.display.set_mode((1920, 1080))
   
-# Display renamed to 'Image'
+# Assigning names to sprites
 pygame.display.set_caption('Image')
 pygame.display.set_caption('redImg')
   
-# Make surface for image to display onto
+# Make surface for the sprites to display onto
 image = pygame.image.load(r'./hackathon-project/campus-map.jpg')
 redImg = pygame.image.load(r'./hackathon-project/Red.png')
 
 while True :  
-    # Repeated image display for the loop at the follwoing coords
+    # Repeated image display for the loop at the requested coordinates
     display_surface.blit(image, (-384, -170))
     display_surface.blit(redImg, (500, 500))
     # gets the pygame event stuff
