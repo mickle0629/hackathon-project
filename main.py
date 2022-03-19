@@ -15,10 +15,14 @@ display_surface = pygame.display.set_mode((1920, 1080))
 # Assigning names to sprites
 pygame.display.set_caption('Image')
 pygame.display.set_caption('redImg')
+pygame.display.set_caption('greenImg')
+pygame.display.set_caption('yellowImg')
   
 # Make surface for the sprites to display onto
 map_background = pygame.image.load(r'./assets/campus-map.jpg')
 official_icon = pygame.image.load(r'./assets/Red.png')
+unofficial_icon = pygame.image.load(r'./assets/Green.png')
+neutral_icon = pygame.image.load(r'./assets/Yellow.png')
 
 while True :  
     # Repeated image display for the loop at the requested coordinates
