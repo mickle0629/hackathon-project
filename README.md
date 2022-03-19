@@ -1,5 +1,5 @@
 # hackathon-project
-## Group Members:
+### Group Members
   - Michael Laramie
   - Jonathan Hamstra
   - An Dang
@@ -19,6 +19,7 @@
 ---
 ### Project Description
 Our project will be an Event Tracker that will enable students at Whitworth to create events via a picture/map of the campus with X and Y coordinates to map where everything is. The events will be color coded ideally, with Red being an official school event (football game, primetime, etc), Yellow being studying and academia related events, and green being unofficial and casual events (Smash Bros tournament). In the app the user will click on the area where the event will be held, then will go through a series of prompts to add information to what the event is. 
+
 **Feature Specifications**
   1. Picture of Map for users to view.
   2. Not limited to official whitworth events only (like HFS).
