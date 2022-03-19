@@ -18,7 +18,7 @@
   4. Presentation Quality
 ---
 ### Project Description
-Our project will be an Event Tracker that will enable students at Whitworth to create events via a picture/map of the campus with X and Y coordinates to map where everything is. The events will be color coded ideally, with Red being an official school event (football game, primetime, etc), Yellow being studying and academia related events, and green being unofficial and casual events (Smash Bros tournament). In the app the user will click on the area where the event will be held, then will go through a series of prompts to add information to what the event is. 
+Our project will be an Event Tracker that will enable students at Whitworth to create events via a picture/map of the campus with X and Y coordinates to map where everything is. The events will be color coded ideally, with Red being an official school event (football game, primetime, etc), Yellow being studying and academia related events, and green being unofficial and casual events (Smash Bros tournament). In the app the user will click on the area where the event will be held, then will go through a series of prompts to add information to what the event is. From there other users in the app will be able to see those events and choose to attend the events, after which a list will be updated to include either their name, or a counter displaying how mnay will be there.
 
 **Feature Specifications**
   1. Picture of Map for users to view.
