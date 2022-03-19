@@ -14,13 +14,13 @@ pygame.display.set_caption('Image')
 pygame.display.set_caption('redImg')
   
 # Make surface for the sprites to display onto
-image = pygame.image.load(r'./hackathon-project/campus-map.jpg')
-redImg = pygame.image.load(r'./hackathon-project/Red.png')
+map_background = pygame.image.load(r'./assets/campus-map.jpg')
+official_icon = pygame.image.load(r'./assets/Red.png')
 
 while True :  
     # Repeated image display for the loop at the requested coordinates
-    display_surface.blit(image, (-384, -170))
-    display_surface.blit(redImg, (500, 500))
+    display_surface.blit(map_background, (-384, -170))
+    display_surface.blit(official_icon, (500, 500))
     # gets the pygame event stuff
     # if event is QUIT, halt the program
     for event in pygame.event.get() :
