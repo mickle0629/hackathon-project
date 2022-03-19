@@ -22,8 +22,10 @@ Our project will be an Event Tracker that will enable students at Whitworth to c
 
 **Feature Specifications**
   1. Picture of Map for users to view.
-  2. Not limited to official whitworth events only (like HFS).
-  3. Color Coded Events, Red - Official, Yellow - Academia, Green - Unofficial
-  4. Campus Wide, enrolled students only.
-  5. Optional: Nice User Interface
+  2. User can add events to map after filling out event information.
+  3. List of people going to X event OR counter of X people going to event.
+  4. Not limited to official whitworth events only (like HFS).
+  5. Color Coded Events, Red - Official, Yellow - Academia, Green - Unofficial
+  6. Campus Wide, enrolled students only.
+  7. Optional: Nice User Interface
 ---
