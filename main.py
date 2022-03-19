@@ -16,11 +16,10 @@ pygame.display.set_caption('redImg')
 # Make surface for the sprites to display onto
 map_background = pygame.image.load(r'./assets/campus-map.jpg')
 official_icon = pygame.image.load(r'./assets/Red.png')
+display_surface.blit(map_background, (-384, -170))
 
 while True :  
     # Repeated image display for the loop at the requested coordinates
-    display_surface.blit(map_background, (-384, -170))
-    display_surface.blit(official_icon, (500, 500))
     # gets the pygame event stuff
     # if event is QUIT, halt the program
     for event in pygame.event.get() :
@@ -31,6 +30,13 @@ while True :
   
             # quit the program.
             quit()
-  
+        elif event.type == pygame.MOUSEBUTTONUP:
+            pos = pygame.mouse.get_pos()
+            temp = list(pos)
+            temp[0] -= 50
+            temp[1] -= 50
+            pos = tuple(temp)
+            display_surface.blit(official_icon, (pos))
+
         # Draws the surface object to the screen.  
-    pygame.display.update() 
+    pygame.display.update()
