@@ -28,4 +28,8 @@ Our project will be an Event Tracker that will enable students at Whitworth to c
   5. Color Coded Events, Red - Official, Yellow - Academia, Green - Unofficial
   6. Campus Wide, enrolled students only.
   7. Optional: Nice User Interface
+**Improvements**
+  1. Display how many people are going to X event.
+  2. UI Improvements
+  3. Less ballistic spelling syntax
 ---
