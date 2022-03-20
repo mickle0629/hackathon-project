@@ -6,7 +6,8 @@ import mysql.connector
 pygame.init()
 myfont = pygame.font.SysFont("monospace", 15)
 text = ""
-
+file = pygame.image.load(r'./assets/Yellow.png')
+eventype = ""
 
 # --------------------------------------------
 # Works Cited/Referenced
@@ -39,26 +40,22 @@ def initilize_arrays():
     sql = "SELECT * FROM Event_Info"
     mycursor.execute(sql)
     rows = mycursor.fetchall()
-    i = 0
-    ID_Type = [None] * len(rows)
+    global ID_Coords
     ID_Coords = [None] * len(rows)
-
+    i = 0
     for row in rows:
-        ID_Type[i] = (row[0], row[6])
-        ID_Coords[i] = (row[0], row[8], row[9])
+        ID_Coords[i] = (row[0], row[6], row[8], row[9])
         i += 1
 
     print(ID_Coords[1])
 
-def update_screen():
-    display_surface.blit(map_background, (-384, -170))
-
-# Var with white RGB
-white = (255, 255, 255)
-    
 # Dimensions of image to display
 display_surface = pygame.display.set_mode((1920, 1080))
   
+# Var with white RGB
+white = (255, 255, 255)
+    
+
 # Assigning names to sprites
 pygame.display.set_caption('Image')
 pygame.display.set_caption('redImg')
@@ -67,16 +64,31 @@ pygame.display.set_caption('yellowImg')
   
 # Make surface for the sprites to display onto
 map_background = pygame.image.load(r'./assets/campus-map.jpg')
-official_icon = pygame.image.load(r'./assets/Red.png')
-unofficial_icon = pygame.image.load(r'./assets/Green.png')
-neutral_icon = pygame.image.load(r'./assets/Yellow.png')
+official_icon = pygame.image.load(r'./assets/Red Event.png')
+unofficial_icon = pygame.image.load(r'./assets/Green Event.png')
+neutral_icon = pygame.image.load(r'./assets/Yellow Event.png')
 # Print the map
 display_surface.blit(map_background, (-384, -170))
+
+def update_screen():
+    display_surface.blit(map_background, (-384, -170))
+    for i in ID_Coords:
+        event_type = str(i[1])
+        if event_type == "Green":
+            file = unofficial_icon
+        elif event_type == "Red":
+            file = official_icon
+        else:
+            file = neutral_icon
+        display_surface.blit(file, (i[2], i[3]))
+        
+
 
 
 label = myfont.render("Hello World!", 1, (255,255,0))
 
 initilize_arrays()
+update_screen()
 
 while True :  
     # Loop keeps running until closing
