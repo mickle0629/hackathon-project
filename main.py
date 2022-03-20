@@ -3,7 +3,6 @@ from multiprocessing.dummy import Array
 from operator import add
 from turtle import screensize, width
 from typing import List
-from unittest import result
 from venv import create
 import pygame, sys
 import mysql.connector
@@ -20,6 +19,8 @@ pull_id = 0
 # https://www.geeksforgeeks.org/python-display-images-with-pygame/#:~:text=There%20are%20four%20basic%20steps,drawn%20on%20it%2C%20using%20image. 
 # Code for DB Connection Stuff:
 # https://www.w3schools.com/python/python_mysql_insert.asp 
+# Tkinter Input Window Popup:
+# https://python-course.eu/tkinter/entry-widgets-in-tkinter.php 
 #---------------------------------------------
 mydb = mysql.connector.connect(
   host="192.9.227.213",
@@ -86,22 +87,24 @@ quitButtonLocation = (1810, 5)
 
 # Print the map
 display_surface.blit(map_background, (-384, -170))
-#------TKINTER WINDOW POPUP SETUP-------
+#------TKINTER WINDOW POPUP SETUP-------# This was referenced
+# Array that will store user input
 userInput = [None] * 6
+# Fields that will be displayed to the user
 fields = 'Date(YYYY-MM-DD', 'Time(HH:MM:SS)', 'Event Name', 'Description', 'Location', 'Type'
 
+# Activates the popup on use, prompting the user for input
 def popUp():
-    root = Tk()
-    ents = makeform(root, fields)
-    root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
-    b1 = Button(root, text='Log',
+    root = Tk() # Core of Tk() is activated
+    ents = makeform(root, fields) # make the window
+    root.bind('<Return>', (lambda event, e=ents: fetch(e)))
+    b1 = Button(root, text='Log', # make log button, if pressed insert info into array
                   command=(lambda e=ents: fetch(e)))
-    b1.pack(side=LEFT, padx=5, pady=5)
-
+    b1.pack(side=LEFT, padx=5, pady=5) # padding
     master = Tk()
     master.mainloop()
 
-def fetch(entries):
+def fetch(entries): # get the entries, insert into array via for loop
     i = 0
     for entry in entries:
         text = entry[1].get()
