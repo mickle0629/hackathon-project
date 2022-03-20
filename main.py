@@ -19,14 +19,16 @@ mydb = mysql.connector.connect(
   database = "hackathon1"
 )
 #Create event will be used following a series of user inputs to add the corresponding information to the database.
-def createEvent(date, time, name, descr, location, Ev_type): # People count and ID will be auto updated.
+def createEvent(date, time, name, descr, location, Ev_type, mapx, mapy): # People count and ID will be auto updated.
     mycursor = mydb.cursor()
-    sql = "INSERT INTO Event_Info (Date, Time, Event_Name, Event_Descr, Event_Location, Event_Type) VALUES (%s, %s, %s, %s, %s, %s)"
-    val = (date, time, name, descr, location, Ev_type)
+    sql = "INSERT INTO Event_Info (Date, Time, Event_Name, Event_Descr, Event_Location, Event_Type, Map_X, Map_Y) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+    val = (date, time, name, descr, location, Ev_type, mapx, mapy)
     mycursor.execute(sql, val)
     mydb.commit()
 # Testing create event here:
-# createEvent("2022-01-01", "3:00:00", "Smash Tournament", "Smashy Tourny", "Duvall", "Green")
+# createEvent("2022-01-17", "5:23:00", "Elden Ring Party", "Failing to kill Godrick for 90 hours", "Ninth Circle of Hell", "Green", 340, 340)
+# createEvent("2022-02-28", "4:23:00", "Pizza eating comp", "Making bad decisions and also diabeetus", "The Tunnels", "Yellow", 1020, 400)
+# createEvent("2022-03-05", "1:30:00", "Doing coke in the hub", "Crackhead", "HUB", "Red", 1200, 1200)
 
 
 # Var with white RGB
