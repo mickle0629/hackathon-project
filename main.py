@@ -78,14 +78,14 @@ official_icon = pygame.image.load(r'./assets/Red Event.png')
 unofficial_icon = pygame.image.load(r'./assets/Green Event.png')
 neutral_icon = pygame.image.load(r'./assets/Yellow Event.png')
 
-#Adding the sprites for the buttons
+#Adding the sprites for the buttons & Logos
 addEventButton = pygame.image.load(r'./assets/AddEvent.png')
-clearEventsButton = pygame.image.load(r'./assets/ClearEvents.png')
 quitButton = pygame.image.load(r'./assets/QuitButton.png')
+logo = pygame.image.load(r'./assets/Logo.png')
 
 #Locations for the buttons
 addEventButtonLocation = (1590, 5)
-clearEventsButtonLocation = (1700, 5)
+logoLocation = (1700, 5)
 quitButtonLocation = (1810, 5)
 
 # Print the map
@@ -143,7 +143,7 @@ def update_screen():
     
     #Adding the buttons
     display_surface.blit(quitButton, (quitButtonLocation))
-    display_surface.blit(clearEventsButton, (clearEventsButtonLocation))
+    display_surface.blit(logo, (logoLocation))
     display_surface.blit(addEventButton, (addEventButtonLocation))
         
 def print_result(ID):
