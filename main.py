@@ -124,9 +124,6 @@ def print_result(ID):
     mycursor.execute(sql)
     result = mycursor.fetchall()
     print(result)
-        display_surface.blit(file, (i[2], i[3]))
-
-label = myfont.render("Hello World!", 1, (255,255,0))
 
 initilize_arrays()
 update_screen()
