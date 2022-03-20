@@ -1,3 +1,4 @@
+from ctypes import pointer
 from dis import dis
 from multiprocessing.dummy import Array
 from operator import add
@@ -186,13 +187,18 @@ while True :
         elif event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
             temp = list(pos)
-            for i in ID_Coords:
-                if abs(i[2] - temp[0]) < 35:
-                    for n in ID_Coords:
-                        if abs(n[3] - temp[1]) < 35:
-                            pull_id = n[0]
-            if pull_id != 0:
-                print_result(pull_id)   
-                pull_id = 0
+            if pos[0] >= addEventButtonLocation[0] and pos[0] <= addEventButtonLocation[0] + 105 and pos[1] >= addEventButtonLocation[1] and pos[1] <= addEventButtonLocation[1]-56:
+                popUp()
+            elif pos[0] >= quitButtonLocation[0] and pos[0] <= quitButtonLocation[0] + 105 and pos[1] >= quitButtonLocation[1] and pos[1] <= quitButton[1]-56:
+                pygame.quit()
+            else:
+                for i in ID_Coords:
+                    if abs(i[2] - temp[0]) < 35:
+                        for n in ID_Coords:
+                            if abs(n[3] - temp[1]) < 35:
+                                pull_id = n[0]
+                if pull_id != 0:
+                    print_result(pull_id)   
+                    pull_id = 0
         # Draws the surface object to the screen.  
     pygame.display.update()
