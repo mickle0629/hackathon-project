@@ -6,8 +6,7 @@ import mysql.connector
 pygame.init()
 myfont = pygame.font.SysFont("monospace", 15)
 text = ""
-ID_Type = []
-ID_Coords = []
+
 
 # --------------------------------------------
 # Works Cited/Referenced
@@ -38,9 +37,19 @@ def createEvent(date, time, name, descr, location, Ev_type, mapx, mapy): # Peopl
 def initilize_arrays():
     mycursor = mydb.cursor()
     sql = "SELECT * FROM Event_Info"
-    rows = mycursor.execute(sql)
+    mycursor.execute(sql)
+    rows = mycursor.fetchall()
+    i = 0
+    ID_Type = [None] * len(rows)
+    ID_Coords = [None] * len(rows)
+
     for row in rows:
-        ID_Type[]
+        ID_Type[i] = (row[0], row[6])
+        ID_Coords[i] = (row[0], row[8], row[9])
+        i += 1
+
+    print(ID_Coords[1])
+
 def update_screen():
     display_surface.blit(map_background, (-384, -170))
 
@@ -66,6 +75,8 @@ display_surface.blit(map_background, (-384, -170))
 
 
 label = myfont.render("Hello World!", 1, (255,255,0))
+
+initilize_arrays()
 
 while True :  
     # Loop keeps running until closing
