@@ -2,6 +2,8 @@ from venv import create
 import pygame, sys
 import mysql.connector
 pygame.init()
+myfont = pygame.font.SysFont("monospace", 15)
+text = ""
 # --------------------------------------------
 # Works Cited/Referenced
 # Code for displaying an image via Pygame: 
@@ -48,6 +50,8 @@ neutral_icon = pygame.image.load(r'./assets/Yellow.png')
 display_surface.blit(map_background, (-384, -170))
 
 
+label = myfont.render("Hello World!", 1, (255,255,0))
+
 while True :  
     # Loop keeps running until closing
     for event in pygame.event.get() :
@@ -56,6 +60,27 @@ while True :
             # deactivates the pygame library and quit program
             pygame.quit()
             quit()
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+
+                while 1:
+                    pygame.event.clear()
+                    event = pygame.event.wait()
+                    if event.type == pygame.KEYUP:
+                        key_in = event.key
+                        if key_in == pygame.K_RETURN:
+                            break
+                        elif key_in == pygame.K_SPACE:
+                            text += " "
+                        elif key_in == pygame.K_BACKSPACE:
+                            text = text[0:-1]
+                        else:
+                            temp = pygame.key.name(key_in)
+                            text += temp
+                    text_display = myfont.render(text, 1, (255,255,0))
+                    display_surface.blit(text_display, (500, 500))
+                    pygame.display.update()
+
         elif event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
             temp = list(pos)
@@ -63,6 +88,8 @@ while True :
             temp[1] -= 50
             pos = tuple(temp)
             display_surface.blit(official_icon, (pos))
+            display_surface.blit(label, (pos))
+
 
         # Draws the surface object to the screen.  
     pygame.display.update()
