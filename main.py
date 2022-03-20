@@ -1,9 +1,14 @@
+from multiprocessing.dummy import Array
+from typing import List
 from venv import create
 import pygame, sys
 import mysql.connector
 pygame.init()
 myfont = pygame.font.SysFont("monospace", 15)
 text = ""
+ID_Type = []
+ID_Coords = []
+
 # --------------------------------------------
 # Works Cited/Referenced
 # Code for displaying an image via Pygame: 
@@ -28,6 +33,14 @@ def createEvent(date, time, name, descr, location, Ev_type): # People count and 
 # Testing create event here:
 # createEvent("2022-01-01", "3:00:00", "Smash Tournament", "Smashy Tourny", "Duvall", "Green")
 
+def initilize_arrays():
+    mycursor = mydb.cursor()
+    sql = "SELECT * FROM Event_Info"
+    rows = mycursor.execute(sql)
+    for row in rows:
+        ID_Type[]
+def update_screen():
+    display_surface.blit(map_background, (-384, -170))
 
 # Var with white RGB
 white = (255, 255, 255)
@@ -54,8 +67,8 @@ label = myfont.render("Hello World!", 1, (255,255,0))
 
 while True :  
     # Loop keeps running until closing
-    for event in pygame.event.get() :
-        if event.type == pygame.QUIT :
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
   
             # deactivates the pygame library and quit program
             pygame.quit()
