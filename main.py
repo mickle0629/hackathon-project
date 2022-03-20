@@ -75,6 +75,13 @@ userInput = [None] * 6
 fields = 'Date(YYYY-MM-DD', 'Time(HH:MM:SS)', 'Event Name', 'Description', 'Location', 'Type'
 
 def popUp():
+    root = Tk()
+    ents = makeform(root, fields)
+    root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
+    b1 = Button(root, text='Log',
+                  command=(lambda e=ents: fetch(e)))
+    b1.pack(side=LEFT, padx=5, pady=5)
+
     master = Tk()
     master.mainloop()
 
@@ -84,6 +91,7 @@ def fetch(entries):
         text = entry[1].get()
         userInput[i] = text
         i += 1
+    print(userInput)
 # createEvent(userInput[0], userInput[1], userInput[2], userInput[3], userInput[4], userInput[5], mapx, mapy)
 def makeform(root, fields):
     entries = []
@@ -96,13 +104,7 @@ def makeform(root, fields):
         ent.pack(side=RIGHT, expand=YES, fill=X)
         entries.append((field, ent))
     return entries
-if __name__ == '__main__':
-    root = Tk()
-    ents = makeform(root, fields)
-    root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
-    b1 = Button(root, text='Log',
-                  command=(lambda e=ents: fetch(e)))
-    b1.pack(side=LEFT, padx=5, pady=5)
+
 #---------------------------------------
 
 def update_screen():
@@ -118,11 +120,16 @@ def update_screen():
         display_surface.blit(file, (i[2] - 33, i[3] - 35))
         
 def print_result(ID):
+    master = Tk()
     mycursor = mydb.cursor()
     sql = f"SELECT * FROM Event_Info WHERE ID={ID}"
     mycursor.execute(sql)
     result = mycursor.fetchall()
     print(result)
+    msg = Message(master, text = result)
+    msg.config(bg='lightgreen', font=('times', 24, 'italic'))
+    msg.pack()
+    mainloop()
 
 initilize_arrays()
 update_screen()
@@ -155,6 +162,8 @@ while True :
                     text_display = myfont.render(text, 1, (255,255,0))
                     display_surface.blit(text_display, (500, 500))
                     pygame.display.update()
+            elif event.key == pygame.K_t:
+                popUp()
 
         elif event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
