@@ -74,13 +74,18 @@ display_surface.blit(map_background, (-384, -170))
 #------TKINTER WINDOW POPUP SETUP-------
 userInput = [None] * 6
 fields = 'Date(YYYY-MM-DD', 'Time(HH:MM:SS)', 'Event Name', 'Description', 'Location', 'Type'
+
+def popUp():
+    master = Tk()
+    master.mainloop()
+
 def fetch(entries):
     i = 0
     for entry in entries:
         text = entry[1].get()
         userInput[i] = text
         i += 1
-
+# createEvent(userInput[0], userInput[1], userInput[2], userInput[3], userInput[4], userInput[5], mapx, mapy)
 def makeform(root, fields):
     entries = []
     for field in fields:
@@ -99,12 +104,6 @@ if __name__ == '__main__':
     b1 = Button(root, text='Log',
                   command=(lambda e=ents: fetch(e)))
     b1.pack(side=LEFT, padx=5, pady=5)
-    b2 = Button(root, text='Exit', command=root.quit)
-    b2.pack(side=LEFT, padx=5, pady=5)
-
-def popUp():
-    master = Tk()
-    master.mainloop()
 #---------------------------------------
 
 def update_screen():
