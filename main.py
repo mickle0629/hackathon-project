@@ -72,12 +72,14 @@ neutral_icon = pygame.image.load(r'./assets/Yellow Event.png')
 display_surface.blit(map_background, (-384, -170))
 
 #------TKINTER WINDOW POPUP SETUP-------
-fields = 'Date', 'Time', 'Event Name', 'Description', 'Location', 'Type'
+userInput = [None] * 6
+fields = 'Date(YYYY-MM-DD', 'Time(HH:MM:SS)', 'Event Name', 'Description', 'Location', 'Type'
 def fetch(entries):
+    i = 0
     for entry in entries:
-        field = entry[0]
         text = entry[1].get()
-        print('%s: "%s"' % (field, text))
+        userInput[i] = text
+        i += 1
 
 def makeform(root, fields):
     entries = []
@@ -94,17 +96,16 @@ if __name__ == '__main__':
     root = Tk()
     ents = makeform(root, fields)
     root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
-    b1 = Button(root, text='Show',
+    b1 = Button(root, text='Log',
                   command=(lambda e=ents: fetch(e)))
     b1.pack(side=LEFT, padx=5, pady=5)
-    b2 = Button(root, text='Quit', command=root.quit)
+    b2 = Button(root, text='Exit', command=root.quit)
     b2.pack(side=LEFT, padx=5, pady=5)
 
-master = Tk()
-master.mainloop()
+def popUp():
+    master = Tk()
+    master.mainloop()
 #---------------------------------------
-
-
 
 def update_screen():
     display_surface.blit(map_background, (-384, -170))
@@ -117,9 +118,6 @@ def update_screen():
         else:
             file = neutral_icon
         display_surface.blit(file, (i[2], i[3]))
-        
-
-
 
 label = myfont.render("Hello World!", 1, (255,255,0))
 
