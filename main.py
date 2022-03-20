@@ -147,10 +147,14 @@ def print_result(ID):
     mycursor = mydb.cursor()
     sql = f"SELECT * FROM Event_Info WHERE ID={ID}"
     mycursor.execute(sql)
-    result = mycursor.fetchall()
-    print(result)
-    msg = Message(master, text = result)
-    msg.config(bg='lightgreen', font=('times', 24, 'italic'))
+    result = mycursor.fetchone()
+    output = ["Date: %s\n" % result[1]]
+    output.append("Time: %s\n" % result[2])
+    output.append("Title: %s\n" % result[3])
+    output.append("Location: %s\n" % result[5])
+    output.append("Description: %s" % result[4])
+    msg = Message(master, text = "".join(output))
+    msg.config(bg='white', font=('times', 18, 'italic'), aspect = 200, relief = RAISED)
     msg.pack()
     mainloop()
 
