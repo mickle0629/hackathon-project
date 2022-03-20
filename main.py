@@ -1,6 +1,5 @@
 from multiprocessing.dummy import Array
 from typing import List
-from unittest import result
 from venv import create
 import pygame, sys
 import mysql.connector
@@ -10,7 +9,6 @@ myfont = pygame.font.SysFont("monospace", 15)
 text = ""
 file = pygame.image.load(r'./assets/Yellow.png')
 eventype = ""
-pull_id = 0
 
 # --------------------------------------------
 # Works Cited/Referenced
@@ -49,6 +47,9 @@ def initilize_arrays():
     for row in rows:
         ID_Coords[i] = (row[0], row[6], row[8], row[9])
         i += 1
+
+    print(ID_Coords[1])
+
 # Dimensions of image to display
 display_surface = pygame.display.set_mode((1920, 1080))
   
@@ -73,13 +74,14 @@ display_surface.blit(map_background, (-384, -170))
 #------TKINTER WINDOW POPUP SETUP-------
 userInput = [None] * 6
 fields = 'Date(YYYY-MM-DD', 'Time(HH:MM:SS)', 'Event Name', 'Description', 'Location', 'Type'
+
 def fetch(entries):
     i = 0
     for entry in entries:
         text = entry[1].get()
         userInput[i] = text
         i += 1
-
+# createEvent(userInput[0], userInput[1], userInput[2], userInput[3], userInput[4], userInput[5], mapx, mapy)
 def makeform(root, fields):
     entries = []
     for field in fields:
@@ -98,10 +100,8 @@ if __name__ == '__main__':
     b1 = Button(root, text='Log',
                   command=(lambda e=ents: fetch(e)))
     b1.pack(side=LEFT, padx=5, pady=5)
-    b2 = Button(root, text='Exit', command=root.quit)
-    b2.pack(side=LEFT, padx=5, pady=5)
 
-def popUp():
+#def popUp():
     master = Tk()
     master.mainloop()
 #---------------------------------------
@@ -116,14 +116,9 @@ def update_screen():
             file = official_icon
         else:
             file = neutral_icon
-        display_surface.blit(file, (i[2] - 33, i[3] - 35))
-        
-def print_result(ID):
-    mycursor = mydb.cursor()
-    sql = f"SELECT * FROM Event_Info WHERE ID={ID}"
-    mycursor.execute(sql)
-    result = mycursor.fetchall()
-    print(result)
+        display_surface.blit(file, (i[2], i[3]))
+
+label = myfont.render("Hello World!", 1, (255,255,0))
 
 initilize_arrays()
 update_screen()
@@ -160,14 +155,12 @@ while True :
         elif event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
             temp = list(pos)
-            for i in ID_Coords:
-                if abs(i[2] - temp[0]) < 35:
-                    for n in ID_Coords:
-                        if abs(n[3] - temp[1]) < 35:
-                            pull_id = n[0]
-            if pull_id != 0:
-                print_result(pull_id)   
-                pull_id = 0
+            temp[0] -= 50
+            temp[1] -= 50
+            pos = tuple(temp)
+            display_surface.blit(official_icon, (pos))
+            display_surface.blit(label, (pos))
+
 
         # Draws the surface object to the screen.  
     pygame.display.update()
