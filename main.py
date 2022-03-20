@@ -3,6 +3,7 @@ from multiprocessing.dummy import Array
 from operator import add
 from turtle import screensize, width
 from typing import List
+from unittest import result
 from venv import create
 import pygame, sys
 import mysql.connector
@@ -12,7 +13,7 @@ myfont = pygame.font.SysFont("monospace", 15)
 text = ""
 file = pygame.image.load(r'./assets/Yellow.png')
 eventype = ""
-
+pull_id = 0
 # --------------------------------------------
 # Works Cited/Referenced
 # Code for displaying an image via Pygame: 
@@ -20,7 +21,6 @@ eventype = ""
 # Code for DB Connection Stuff:
 # https://www.w3schools.com/python/python_mysql_insert.asp 
 #---------------------------------------------
-
 mydb = mysql.connector.connect(
   host="192.9.227.213",
   user="hackathon",
@@ -38,7 +38,6 @@ def createEvent(date, time, name, descr, location, Ev_type, mapx, mapy): # Peopl
 # createEvent("2022-01-17", "5:23:00", "Elden Ring Party", "Failing to kill Godrick for 90 hours", "Ninth Circle of Hell", "Green", 340, 340)
 # createEvent("2022-02-28", "4:23:00", "Pizza eating comp", "Making bad decisions and also diabeetus", "The Tunnels", "Yellow", 1020, 400)
 # createEvent("2022-03-05", "1:30:00", "Doing coke in the hub", "Crackhead", "HUB", "Red", 1200, 1200)
-
 def initilize_arrays():
     mycursor = mydb.cursor()
     sql = "SELECT * FROM Event_Info"
@@ -50,9 +49,6 @@ def initilize_arrays():
     for row in rows:
         ID_Coords[i] = (row[0], row[6], row[8], row[9])
         i += 1
-
-    print(ID_Coords[1]) 
-
 # Dimensions of image to display
 display_surface = pygame.display.set_mode((1920, 1080))
   
@@ -65,6 +61,7 @@ eventGreen = (105, 153, 93)
 eventYellow = (250, 185, 21)
 eventRed = (152, 71, 63)
 
+    
 # Assigning names to sprites
 pygame.display.set_caption('Image')
 pygame.display.set_caption('redImg')
@@ -89,10 +86,20 @@ quitButtonLocation = (1810, 5)
 
 # Print the map
 display_surface.blit(map_background, (-384, -170))
-
 #------TKINTER WINDOW POPUP SETUP-------
 userInput = [None] * 6
 fields = 'Date(YYYY-MM-DD', 'Time(HH:MM:SS)', 'Event Name', 'Description', 'Location', 'Type'
+
+def popUp():
+    root = Tk()
+    ents = makeform(root, fields)
+    root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
+    b1 = Button(root, text='Log',
+                  command=(lambda e=ents: fetch(e)))
+    b1.pack(side=LEFT, padx=5, pady=5)
+
+    master = Tk()
+    master.mainloop()
 
 def fetch(entries):
     i = 0
@@ -100,6 +107,7 @@ def fetch(entries):
         text = entry[1].get()
         userInput[i] = text
         i += 1
+    print(userInput)
 # createEvent(userInput[0], userInput[1], userInput[2], userInput[3], userInput[4], userInput[5], mapx, mapy)
 def makeform(root, fields):
     entries = []
@@ -112,17 +120,6 @@ def makeform(root, fields):
         ent.pack(side=RIGHT, expand=YES, fill=X)
         entries.append((field, ent))
     return entries
-if __name__ == '__main__':
-    root = Tk()
-    ents = makeform(root, fields)
-    root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
-    b1 = Button(root, text='Log',
-                  command=(lambda e=ents: fetch(e)))
-    b1.pack(side=LEFT, padx=5, pady=5)
-
-#def popUp():
-    master = Tk()
-    master.mainloop()
 #---------------------------------------
 
 def update_screen():
@@ -135,18 +132,27 @@ def update_screen():
             file = official_icon
         else:
             file = neutral_icon
-        display_surface.blit(file, (i[2], i[3]))
+        display_surface.blit(file, (i[2] - 33, i[3] - 35))
     
     #Adding the buttons
     display_surface.blit(quitButton, (quitButtonLocation))
     display_surface.blit(clearEventsButton, (clearEventsButtonLocation))
     display_surface.blit(addEventButton, (addEventButtonLocation))
-
-label = myfont.render("Hello World!", 1, (255,255,0))
+        
+def print_result(ID):
+    master = Tk()
+    mycursor = mydb.cursor()
+    sql = f"SELECT * FROM Event_Info WHERE ID={ID}"
+    mycursor.execute(sql)
+    result = mycursor.fetchall()
+    print(result)
+    msg = Message(master, text = result)
+    msg.config(bg='lightgreen', font=('times', 24, 'italic'))
+    msg.pack()
+    mainloop()
 
 initilize_arrays()
 update_screen()
-
 while True :  
     # Loop keeps running until closing
     for event in pygame.event.get():
@@ -157,7 +163,6 @@ while True :
             quit()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
-
                 while 1:
                     pygame.event.clear()
                     event = pygame.event.wait()
@@ -175,16 +180,19 @@ while True :
                     text_display = myfont.render(text, 1, (255,255,0))
                     display_surface.blit(text_display, (500, 500))
                     pygame.display.update()
+            elif event.key == pygame.K_t:
+                popUp()
 
         elif event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
             temp = list(pos)
-            temp[0] -= 50
-            temp[1] -= 50
-            pos = tuple(temp)
-            display_surface.blit(official_icon, (pos))
-            display_surface.blit(label, (pos))
-
-
+            for i in ID_Coords:
+                if abs(i[2] - temp[0]) < 35:
+                    for n in ID_Coords:
+                        if abs(n[3] - temp[1]) < 35:
+                            pull_id = n[0]
+            if pull_id != 0:
+                print_result(pull_id)   
+                pull_id = 0
         # Draws the surface object to the screen.  
     pygame.display.update()
