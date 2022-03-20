@@ -1,6 +1,5 @@
 from multiprocessing.dummy import Array
 from typing import List
-from unittest import result
 from venv import create
 import pygame, sys
 import mysql.connector
@@ -10,7 +9,6 @@ myfont = pygame.font.SysFont("monospace", 15)
 text = ""
 file = pygame.image.load(r'./assets/Yellow.png')
 eventype = ""
-pull_id = 0
 
 # --------------------------------------------
 # Works Cited/Referenced
@@ -49,6 +47,9 @@ def initilize_arrays():
     for row in rows:
         ID_Coords[i] = (row[0], row[6], row[8], row[9])
         i += 1
+
+    print(ID_Coords[1])
+
 # Dimensions of image to display
 display_surface = pygame.display.set_mode((1920, 1080))
   
@@ -105,6 +106,17 @@ def makeform(root, fields):
         entries.append((field, ent))
     return entries
 
+if __name__ == '__main__':
+    root = Tk()
+    ents = makeform(root, fields)
+    root.bind('<Return>', (lambda event, e=ents: fetch(e)))   
+    b1 = Button(root, text='Log',
+                  command=(lambda e=ents: fetch(e)))
+    b1.pack(side=LEFT, padx=5, pady=5)
+
+#def popUp():
+    master = Tk()
+    master.mainloop()
 #---------------------------------------
 
 def update_screen():
@@ -130,6 +142,9 @@ def print_result(ID):
     msg.config(bg='lightgreen', font=('times', 24, 'italic'))
     msg.pack()
     mainloop()
+        display_surface.blit(file, (i[2], i[3]))
+
+label = myfont.render("Hello World!", 1, (255,255,0))
 
 initilize_arrays()
 update_screen()
@@ -168,14 +183,12 @@ while True :
         elif event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
             temp = list(pos)
-            for i in ID_Coords:
-                if abs(i[2] - temp[0]) < 35:
-                    for n in ID_Coords:
-                        if abs(n[3] - temp[1]) < 35:
-                            pull_id = n[0]
-            if pull_id != 0:
-                print_result(pull_id)   
-                pull_id = 0
+            temp[0] -= 50
+            temp[1] -= 50
+            pos = tuple(temp)
+            display_surface.blit(official_icon, (pos))
+            display_surface.blit(label, (pos))
+
 
         # Draws the surface object to the screen.  
     pygame.display.update()
