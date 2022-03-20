@@ -1,4 +1,7 @@
+from dis import dis
 from multiprocessing.dummy import Array
+from operator import add
+from turtle import screensize, width
 from typing import List
 from unittest import result
 from venv import create
@@ -51,6 +54,13 @@ display_surface = pygame.display.set_mode((1920, 1080))
   
 # Var with white RGB
 white = (255, 255, 255)
+black = (0, 0, 0)    
+themeGreen = (64, 84, 39)
+themeWhite = (240, 241, 238)
+eventGreen = (105, 153, 93)
+eventYellow = (250, 185, 21)
+eventRed = (152, 71, 63)
+
     
 # Assigning names to sprites
 pygame.display.set_caption('Image')
@@ -63,6 +73,17 @@ map_background = pygame.image.load(r'./assets/campus-map.jpg')
 official_icon = pygame.image.load(r'./assets/Red Event.png')
 unofficial_icon = pygame.image.load(r'./assets/Green Event.png')
 neutral_icon = pygame.image.load(r'./assets/Yellow Event.png')
+
+#Adding the sprites for the buttons
+addEventButton = pygame.image.load(r'./assets/AddEvent.png')
+clearEventsButton = pygame.image.load(r'./assets/ClearEvents.png')
+quitButton = pygame.image.load(r'./assets/QuitButton.png')
+
+#Locations for the buttons
+addEventButtonLocation = (1590, 5)
+clearEventsButtonLocation = (1700, 5)
+quitButtonLocation = (1810, 5)
+
 # Print the map
 display_surface.blit(map_background, (-384, -170))
 #------TKINTER WINDOW POPUP SETUP-------
@@ -112,7 +133,12 @@ def update_screen():
         else:
             file = neutral_icon
         display_surface.blit(file, (i[2] - 33, i[3] - 35))
-
+    
+    #Adding the buttons
+    display_surface.blit(quitButton, (quitButtonLocation))
+    display_surface.blit(clearEventsButton, (clearEventsButtonLocation))
+    display_surface.blit(addEventButton, (addEventButtonLocation))
+        
 def print_result(ID):
     master = Tk()
     mycursor = mydb.cursor()
