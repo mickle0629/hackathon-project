@@ -1,7 +1,7 @@
 from ctypes import pointer
 from dis import dis
 from multiprocessing.dummy import Array
-from operator import add
+from operator import add, truediv
 from turtle import screensize, width
 from typing import List
 from venv import create
@@ -36,6 +36,8 @@ def createEvent(date, time, name, descr, location, Ev_type, mapx, mapy): # Peopl
     val = (date, time, name, descr, location, Ev_type, mapx, mapy)
     mycursor.execute(sql, val)
     mydb.commit()
+    initilize_arrays()
+    update_screen()
 # Testing create event here:
 # createEvent("2022-01-17", "5:23:00", "Elden Ring Party", "Failing to kill Godrick for 90 hours", "Ninth Circle of Hell", "Green", 340, 340)
 # createEvent("2022-02-28", "4:23:00", "Pizza eating comp", "Making bad decisions and also diabeetus", "The Tunnels", "Yellow", 1020, 400)
@@ -95,24 +97,25 @@ userInput = [None] * 6
 fields = 'Date(YYYY-MM-DD', 'Time(HH:MM:SS)', 'Event Name', 'Description', 'Location', 'Type'
 
 # Activates the popup on use, prompting the user for input
-def popUp():
+def popUp(mapx, mapy):
     root = Tk() # Core of Tk() is activated
     ents = makeform(root, fields) # make the window
-    root.bind('<Return>', (lambda event, e=ents: fetch(e)))
     b1 = Button(root, text='Log', # make log button, if pressed insert info into array
-                  command=(lambda e=ents: fetch(e)))
+                  command=(lambda e=ents: fetch(e, mapx, mapy)))
     b1.pack(side=LEFT, padx=5, pady=5) # padding
     master = Tk()
     master.mainloop()
 
-def fetch(entries): # get the entries, insert into array via for loop
+def fetch(entries, mapx, mapy): # get the entries, insert into array via for loop
     i = 0
     for entry in entries:
         text = entry[1].get()
         userInput[i] = text
         i += 1
+    userInput.append(mapx)
+    userInput.append(mapy)
     print(userInput)
-# createEvent(userInput[0], userInput[1], userInput[2], userInput[3], userInput[4], userInput[5], mapx, mapy)
+    createEvent(userInput[0], userInput[1], userInput[2], userInput[3], userInput[4], userInput[5], mapx, mapy)
 def makeform(root, fields):
     entries = []
     for field in fields:
@@ -195,7 +198,16 @@ while True :
             pos = pygame.mouse.get_pos()
             temp = list(pos)
             if pos[0] >= addEventButtonLocation[0] and pos[0] <= addEventButtonLocation[0] + 105 and pos[1] >= addEventButtonLocation[1] and pos[1] <= addEventButtonLocation[1]+56:
-                popUp()
+                wait = True
+                while wait == True:
+                    ev = pygame.event.get()
+                    for event in ev:
+                        if event.type == pygame.MOUSEBUTTONUP:
+                            newpos = pygame.mouse.get_pos()
+                            mapx = newpos[0]
+                            mapy = newpos[1]
+                            popUp(mapx, mapy)
+                            wait = False
             elif pos[0] >= quitButtonLocation[0] and pos[0] <= quitButtonLocation[0] + 105 and pos[1] >= quitButtonLocation[1] and pos[1] <= quitButton[1]+56:
                 pygame.quit()
             else:
