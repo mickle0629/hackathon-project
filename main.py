@@ -194,9 +194,9 @@ while True :
         elif event.type == pygame.MOUSEBUTTONUP:
             pos = pygame.mouse.get_pos()
             temp = list(pos)
-            if pos[0] >= addEventButtonLocation[0] and pos[0] <= addEventButtonLocation[0] + 105 and pos[1] >= addEventButtonLocation[1] and pos[1] <= addEventButtonLocation[1]-56:
+            if pos[0] >= addEventButtonLocation[0] and pos[0] <= addEventButtonLocation[0] + 105 and pos[1] >= addEventButtonLocation[1] and pos[1] <= addEventButtonLocation[1]+56:
                 popUp()
-            elif pos[0] >= quitButtonLocation[0] and pos[0] <= quitButtonLocation[0] + 105 and pos[1] >= quitButtonLocation[1] and pos[1] <= quitButton[1]-56:
+            elif pos[0] >= quitButtonLocation[0] and pos[0] <= quitButtonLocation[0] + 105 and pos[1] >= quitButtonLocation[1] and pos[1] <= quitButton[1]+56:
                 pygame.quit()
             else:
                 for i in ID_Coords:
